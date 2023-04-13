@@ -1,0 +1,31 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.container{
+  padding: 1rem .5rem;
+  display : flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.card{
+  width: 24%;
+}
+
+.form{
+  
+  display: flex;
+  justify-content: end;
+  margin-right: 10rem;
+  margin-top: 2rem;
+
+}
+
+.form input{
+ padding: 1rem;
+  border-radius: 0.5rem;
+}
