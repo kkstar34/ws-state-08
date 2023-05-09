@@ -1,63 +1,41 @@
-import { useState } from 'react';
-import './App.css';
 
 
-const App = () => {
+import React, { useEffect, useState } from 'react'
 
-  
-  // <iframe width="885" height="498" src="https://www.youtube.com/embed/aQ5m-WMHSDE" title="Every Game of Thrones Recap Seasons 1 through 7" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  const [films, setFilms] =useState(
-    [
-      { 
-        title : "Jack Bauer",
-        description : "Description",
-        poster : "dnkhbes.jpg",
-        url : "https://www.youtube.com/embed/rnzE7enfNg0"
-      },
-      { 
-        title : "Prison break",
-        description : "Description",
-        poster : "dnkhbes.jpg",
-        url : "https://www.youtube.com/embed/lthmrnx0dxM?list=PLYnHfaJuZ3SGv46ieBotC3U78JfYiJbye"
-      },
+import AddStudent from './components/AddStudent';
+import Student from './components/Student';
+import axios  from 'axios';
 
-      { 
-        title : "Person of interest",
-        description : "Description",
-        poster : "dnkhbes.jpg",
-        url : "https://www.youtube.com/embed/rWNpXOZFWMo"
-      },
-      { 
-        title : "Game of thrones",
-        description : "Description",
-        poster : "dnkhbes.jpg",
-        url : "https://www.youtube.com/embed/aQ5m-WMHSDE"
-      }
-    ]
-  )
+function App() {
 
-  const [filterName, setFilterName] = useState('');
-  const handleSearch = (e) => {
-    setFilterName(e.target.value)
+  const [students, setStudent] = useState([
+    
+  ])
+
+  function addStudent(name){
+    let newStudents = [...students]; 
+    newStudents.push({ name : name})
+    setStudent(newStudents);
   }
 
+  async function fetchData(){
+    let users = await axios.get("https://jsonplaceholder.typicode.com/users");
+    console.log(users);
+    setStudent(users.data);
+  }
 
-  return (<div className="App">
-    <form action="" className='form'>
-      <input type="search" placeholder='search...' onChange={handleSearch}/>
-    </form>
-    <div className="container">
-      {films.filter(film => film.title.toLocaleLowerCase().includes(filterName.toLocaleLowerCase())).map((film,i)=> {
-        return (<div className="card" key={i}>
-              <iframe width="100%" height="400" src={film.url} title={film.title} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-              <h3>{film.title}</h3>
-              <p>{film.description}</p>
-          </div>)
-      })} 
-    </div>  
-  </div>)
+  useEffect( ()=>{
+    fetchData();
+  }, [])
+ 
+  return (
+    <div>
+        <AddStudent addStudent={addStudent}/>
+        {students && students.map((student) =>{
+          return <Student student={student}/>
+        })}
+    </div>
+  )
 }
 
-
-export default App;
-
+export default App
