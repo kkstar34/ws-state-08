@@ -1,39 +1,22 @@
 
 
 import React, { useEffect, useState } from 'react'
-
-import AddStudent from './components/AddStudent';
-import Student from './components/Student';
-import axios  from 'axios';
+import Child from './components/Child';
+import './App.css';
 
 function App() {
 
-  const [students, setStudent] = useState([
-    
-  ])
+  let firstName = 'John';
 
-  function addStudent(name){
-    let newStudents = [...students]; 
-    newStudents.push({ name : name})
-    setStudent(newStudents);
+  function alertTest(){
+    alert('test');
   }
 
-  async function fetchData(){
-    let users = await axios.get("https://jsonplaceholder.typicode.com/users");
-    console.log(users);
-    setStudent(users.data);
-  }
-
-  useEffect( ()=>{
-    fetchData();
-  }, [])
- 
   return (
     <div>
-        <AddStudent addStudent={addStudent}/>
-        {students && students.map((student) =>{
-          return <Student student={student}/>
-        })}
+      <h1>Hello</h1>
+      <Child  name={firstName} alert={alertTest}></Child>
+      
     </div>
   )
 }
